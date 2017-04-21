@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.dx.bilibili">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name="com.dx.bilibili.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <!-- 主页 -->
+        <activity
+            android:name="com.dx.bilibili.ui.activity.MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 测试mvp结构 -->
+        <!-- 测试Fragment TabLayout DrawerLayout 沉浸式布局-->
+        <activity
+            android:name="com.dx.bilibili.ui.activity.NewsActivity"
+            android:label="@string/title_activity_news"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SwipeBack" />
+
+        <!-- Toolbar随页面滑动收展 -->
+        <activity
+            android:name="com.dx.bilibili.ui.activity.ToolbarBehaviorActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SwipeBack"/>
+
+        <!-- StatusBar同Toolbar同背景 -->
+        <activity
+            android:name="com.dx.bilibili.ui.activity.StatusWithPictureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SwipeBack"/>
+
+        <!-- StatusBar同Toolbar同背景,滑动ToolBar放大缩小渐变 -->
+        <activity
+            android:name="com.dx.bilibili.ui.activity.ScrollGradientActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SwipeBack"/>
+
+    </application>
+
+</manifest>
