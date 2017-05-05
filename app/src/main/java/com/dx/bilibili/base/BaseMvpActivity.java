@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import com.dx.bilibili.R;
 import com.dx.bilibili.di.component.DaggerActivityComponent;
 import com.dx.bilibili.di.module.ActivityModule;
-import com.dx.bilibili.App;
+import com.dx.bilibili.app.App;
 import com.dx.bilibili.di.component.ActivityComponent;
 import com.dx.bilibili.di.component.AppComponent;
 import com.dx.bilibili.util.StatusBarUtils;

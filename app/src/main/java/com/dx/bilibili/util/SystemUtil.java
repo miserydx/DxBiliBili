@@ -8,7 +8,7 @@ import android.net.NetworkInfo;
 import android.text.TextUtils;
 
 
-import com.dx.bilibili.App;
+import com.dx.bilibili.app.App;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

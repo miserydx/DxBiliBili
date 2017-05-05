@@ -28,7 +28,7 @@ public class StatusBarUtils {
         return statusBarHeight;
     }
 
-    public static void setStatusBarMergeWithToolBar(final Toolbar toolbar, Activity activity) {
+    public static void  setStatusBarMergeWithToolBar(final Toolbar toolbar, Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //4.4 全透明状态栏
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

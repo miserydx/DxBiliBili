@@ -3,7 +3,6 @@ package com.dx.bilibili.mvp.presenter;
 import android.util.Log;
 
 import com.dx.bilibili.base.AbsBasePresenter;
-import com.dx.bilibili.model.api.ZhihuApis;
 import com.dx.bilibili.model.bean.WeiXinJingXuanBean;
 import com.dx.bilibili.mvp.contract.MvpStructureContract;
 import com.dx.bilibili.model.api.WeChatApis;
@@ -24,12 +23,10 @@ public class MvpStructurePresenter extends AbsBasePresenter<MvpStructureContract
 
     private static final String TAG = MvpStructurePresenter.class.getSimpleName();
 
-    private ZhihuApis zhihuApis;
     private WeChatApis weChatApis;
 
     @Inject
-    public MvpStructurePresenter(ZhihuApis zhihuApis, WeChatApis weChatApis) {
-        this.zhihuApis = zhihuApis;
+    public MvpStructurePresenter(WeChatApis weChatApis) {
         this.weChatApis = weChatApis;
     }
 

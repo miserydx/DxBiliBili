@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.dx.bilibili.di.component.DaggerFragmentComponent;
 import com.dx.bilibili.di.component.FragmentComponent;
-import com.dx.bilibili.App;
+import com.dx.bilibili.app.App;
 import com.dx.bilibili.di.component.AppComponent;
 import com.dx.bilibili.di.module.FragmentModule;
 

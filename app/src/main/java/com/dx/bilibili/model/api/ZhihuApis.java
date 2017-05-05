@@ -1,6 +1,7 @@
 package com.dx.bilibili.model.api;
 
 
+import com.dx.bilibili.di.scope.ApiInfo;
 import com.dx.bilibili.model.bean.HotListBean;
 
 import retrofit2.http.GET;
@@ -18,5 +19,6 @@ public interface ZhihuApis {
      * 热门日报
      */
     @GET("news/hot")
+    @ApiInfo(needSigned = false)
     Observable<HotListBean>  getHotList();
 }

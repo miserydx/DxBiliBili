@@ -1,7 +1,8 @@
-package com.dx.bilibili;
+package com.dx.bilibili.app;
 
 import android.app.Application;
 
+import com.dx.bilibili.BuildConfig;
 import com.dx.bilibili.di.component.DaggerAppComponent;
 import com.dx.bilibili.di.module.AppModule;
 import com.dx.bilibili.di.component.AppComponent;

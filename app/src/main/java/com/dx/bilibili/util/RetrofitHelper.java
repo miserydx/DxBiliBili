@@ -22,6 +22,7 @@ public class RetrofitHelper {
         if(weChatApis == null) {
             weChatApis = createWeChatService();
         }
+
         return weChatApis;
 
     }
@@ -31,7 +32,6 @@ public class RetrofitHelper {
             zhihuApis = createZhihuService();
         }
         return zhihuApis;
-
     }
 
     private static WeChatApis createWeChatService() {

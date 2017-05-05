@@ -2,6 +2,7 @@ package com.dx.bilibili.di.component;
 
 import com.dx.bilibili.di.module.ActivityModule;
 import com.dx.bilibili.ui.activity.NewsActivity;
+import com.dx.bilibili.ui.activity.TestApiActivity;
 import com.dx.bilibili.ui.activity.ToolbarBehaviorActivity;
 import com.dx.bilibili.di.module.PageModule;
 import com.dx.bilibili.di.scope.PerActivity;
@@ -26,5 +27,6 @@ public interface ActivityComponent {
 
     void inject(ScrollGradientActivity scrollGradientActivity);
 
+    void inject(TestApiActivity testApiActivity);
 
 }

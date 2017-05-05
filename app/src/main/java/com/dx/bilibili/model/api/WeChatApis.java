@@ -1,5 +1,6 @@
 package com.dx.bilibili.model.api;
 
+import com.dx.bilibili.di.scope.ApiInfo;
 import com.dx.bilibili.model.bean.WeiXinJingXuanBean;
 
 import retrofit2.Call;
@@ -26,9 +27,11 @@ public interface WeChatApis {
      * @return
      */
     @GET("wxnew")
+    @ApiInfo(needSigned = false)
     Observable<WeiXinJingXuanBean> getWeiXinJingXuan(@Query("key") String key, @Query("num") int num, @Query("page") int page);
 
     @GET("wxnew")
+    @ApiInfo(needSigned = false)
     Call<WeiXinJingXuanBean> getWeiXinJingXuanWithoutRxjava(@Query("key") String key, @Query("num") int num, @Query("page") int page);
 
 }

@@ -2,6 +2,9 @@ package com.dx.bilibili.di.component;
 
 import com.dx.bilibili.di.module.ApiModule;
 import com.dx.bilibili.di.module.AppModule;
+import com.dx.bilibili.model.api.AppApis;
+import com.dx.bilibili.model.api.BangumiApis;
+import com.dx.bilibili.model.api.LiveApis;
 import com.dx.bilibili.model.api.ZhihuApis;
 import com.dx.bilibili.model.api.WeChatApis;
 
@@ -20,5 +23,11 @@ public interface AppComponent {
     ZhihuApis zhihuApis();
 
     WeChatApis weChatApis();
+
+    BangumiApis biliBiliApis();
+
+    AppApis appApis();
+
+    LiveApis liveApis();
 
 }
