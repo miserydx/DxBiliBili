@@ -1,4 +1,4 @@
-package com.dx.bilibili.ui.activity;
+package com.dx.bilibili.ui.test.activity;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 
 import com.dx.bilibili.R;
 import com.dx.bilibili.base.BaseActivity;
-import com.dx.bilibili.ui.fragment.NewsFragment;
+import com.dx.bilibili.ui.test.fragment.NewsFragment;
 
 import butterknife.BindView;
 

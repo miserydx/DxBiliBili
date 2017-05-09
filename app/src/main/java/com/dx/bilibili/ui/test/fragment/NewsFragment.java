@@ -1,4 +1,4 @@
-package com.dx.bilibili.ui.fragment;
+package com.dx.bilibili.ui.test.fragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

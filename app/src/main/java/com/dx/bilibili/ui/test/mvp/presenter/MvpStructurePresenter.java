@@ -1,10 +1,10 @@
-package com.dx.bilibili.mvp.presenter;
+package com.dx.bilibili.ui.test.mvp.presenter;
 
 import android.util.Log;
 
 import com.dx.bilibili.base.AbsBasePresenter;
 import com.dx.bilibili.model.bean.WeiXinJingXuanBean;
-import com.dx.bilibili.mvp.contract.MvpStructureContract;
+import com.dx.bilibili.ui.test.mvp.contract.MvpStructureContract;
 import com.dx.bilibili.model.api.WeChatApis;
 
 import javax.inject.Inject;

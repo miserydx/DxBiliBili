@@ -26,6 +26,8 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
+        registerActivityLifecycleCallbacks(new ActivityLifecycleManager());
         mAppComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
@@ -47,7 +49,7 @@ public class App extends Application {
                 .install();
     }
 
-    public AppComponent getAppComponent(){
+    public AppComponent getAppComponent() {
         return mAppComponent;
     }
 

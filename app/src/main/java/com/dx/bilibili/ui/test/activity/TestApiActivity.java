@@ -1,4 +1,4 @@
-package com.dx.bilibili.ui.activity;
+package com.dx.bilibili.ui.test.activity;
 
 import android.util.Log;
 

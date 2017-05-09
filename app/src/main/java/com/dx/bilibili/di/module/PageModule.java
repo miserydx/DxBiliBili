@@ -1,6 +1,6 @@
 package com.dx.bilibili.di.module;
 
-import com.dx.bilibili.ui.fragment.NewsFragment;
+import com.dx.bilibili.ui.test.fragment.NewsFragment;
 import com.dx.bilibili.di.scope.PerActivity;
 
 import dagger.Module;

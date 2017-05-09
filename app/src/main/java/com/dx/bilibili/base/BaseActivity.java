@@ -34,11 +34,11 @@ public abstract class BaseActivity extends SwipeBackActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         //判断是否使用默认封装的状态栏样式
         setContentView(setContentLayout());
         mContext = this;
         mUnBinder = ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         if(!setCustomStatusBar()){
             setTransparentStatusBar();
         }
@@ -140,5 +140,6 @@ public abstract class BaseActivity extends SwipeBackActivity {
     protected abstract void initViewAndEvent();
 
     protected abstract void initData();
+
 
 }

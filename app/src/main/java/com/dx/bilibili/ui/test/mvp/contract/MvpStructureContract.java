@@ -1,4 +1,4 @@
-package com.dx.bilibili.mvp.contract;
+package com.dx.bilibili.ui.test.mvp.contract;
 
 import com.dx.bilibili.base.BasePresenter;
 import com.dx.bilibili.base.BaseView;

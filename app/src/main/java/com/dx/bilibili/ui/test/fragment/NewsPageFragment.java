@@ -1,4 +1,4 @@
-package com.dx.bilibili.ui.fragment;
+package com.dx.bilibili.ui.test.fragment;
 
 import com.dx.bilibili.R;
 import com.dx.bilibili.base.BaseFragment;

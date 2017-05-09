@@ -1,4 +1,4 @@
-package com.dx.bilibili.ui.adapter;
+package com.dx.bilibili.ui.test.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

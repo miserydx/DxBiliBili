@@ -1,6 +1,7 @@
-package com.dx.bilibili.ui.activity;
+package com.dx.bilibili.ui.test.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,20 +10,22 @@ import android.support.v7.widget.Toolbar;
 import com.dx.bilibili.R;
 import com.dx.bilibili.base.BaseMvpActivity;
 import com.dx.bilibili.model.bean.WeiXinJingXuanBean;
-import com.dx.bilibili.mvp.contract.MvpStructureContract;
-import com.dx.bilibili.ui.adapter.MvpStructureAdapter;
+import com.dx.bilibili.ui.test.mvp.contract.MvpStructureContract;
+import com.dx.bilibili.ui.test.adapter.MvpStructureAdapter;
 import com.dx.bilibili.util.StatusBarUtils;
-import com.dx.bilibili.mvp.presenter.MvpStructurePresenter;
+import com.dx.bilibili.ui.test.mvp.presenter.MvpStructurePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class StatusWithPictureActivity extends BaseMvpActivity<MvpStructurePresenter> implements MvpStructureContract.View {
+public class ScrollGradientActivity extends BaseMvpActivity<MvpStructurePresenter> implements MvpStructureContract.View {
 
-    private final String TAG = StatusWithPictureActivity.class.getSimpleName();
+    private final String TAG = ScrollGradientActivity.class.getSimpleName();
 
+    @BindView(R.id.collapsing_toolbar_layout)
+    CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.activity_main_srl)
@@ -40,7 +43,7 @@ public class StatusWithPictureActivity extends BaseMvpActivity<MvpStructurePrese
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_status_picture;
+        return R.layout.activity_scroll_gradient;
     }
 
     @Override
@@ -57,6 +60,8 @@ public class StatusWithPictureActivity extends BaseMvpActivity<MvpStructurePrese
     protected void initViewAndEvent() {
         //自定义statusbar样式,与toolbar融合
         StatusBarUtils.setStatusBarMergeWithToolBar(mToolbar, this);
+        collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(android.R.color.white));
+        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.white));
         mToolbar.setTitle("新闻");
         setSupportActionBar(mToolbar);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
