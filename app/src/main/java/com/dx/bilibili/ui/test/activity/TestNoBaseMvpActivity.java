@@ -29,17 +29,8 @@ public class TestNoBaseMvpActivity extends AppCompatActivity implements IBaseMvp
     }
 
     @Override
-    public void attachView() {
-        if(mPresenter != null){
-            mPresenter.attachView(this);
-        }
-    }
-
-    @Override
-    public void dettachView() {
-        if(mPresenter != null){
-            mPresenter.detachView();
-        }
+    public NoBaseMvpPresenter getPresenter() {
+        return mPresenter;
     }
 
     @Override

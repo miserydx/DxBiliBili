@@ -1,4 +1,4 @@
-package com.dx.bilibili.model;
+package com.dx.bilibili.app;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -11,7 +11,7 @@ import butterknife.Unbinder;
  * Created by jiayiyang on 17/5/8.
  */
 
-public class MvpActivityBean implements Parcelable{
+public class ActivityBean implements Parcelable {
 
     private Unbinder unbinder;
 
@@ -33,18 +33,17 @@ public class MvpActivityBean implements Parcelable{
         dest.writeSerializable((Serializable) unbinder);
     }
 
-    public static final Parcelable.Creator<MvpActivityBean> CREATOR = new Parcelable.Creator<MvpActivityBean>() {
+    public static final Creator<ActivityBean> CREATOR = new Creator<ActivityBean>() {
         @Override
-        public MvpActivityBean createFromParcel(Parcel source) {
-            MvpActivityBean mvpActivityBean = new MvpActivityBean();
-            mvpActivityBean.setUnbinder((Unbinder)source.readSerializable());
-            return mvpActivityBean;
+        public ActivityBean createFromParcel(Parcel source) {
+            ActivityBean activityBean = new ActivityBean();
+            activityBean.setUnbinder((Unbinder)source.readSerializable());
+            return activityBean;
         }
 
         @Override
-        public MvpActivityBean[] newArray(int size) {
-            return new MvpActivityBean[size];
+        public ActivityBean[] newArray(int size) {
+            return new ActivityBean[size];
         }
     };
-
 }

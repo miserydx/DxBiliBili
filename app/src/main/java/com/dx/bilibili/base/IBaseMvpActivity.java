@@ -29,8 +29,6 @@ public interface IBaseMvpActivity<T extends AbsBasePresenter> {
 
     void initData();
 
-    void attachView();
-
-    void dettachView();
+    T getPresenter();
 
 }
