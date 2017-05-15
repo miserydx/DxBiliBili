@@ -1,6 +1,7 @@
 package com.dx.bilibili.ui.test.activity;
 
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.dx.bilibili.R;
 import com.dx.bilibili.base.IBaseMvpActivity;
@@ -36,6 +37,11 @@ public class TestNoBaseMvpActivity extends AppCompatActivity implements IBaseMvp
     @Override
     public int getLayoutId() {
         return R.layout.activity_test_no_base;
+    }
+
+    @Override
+    public View getPaddingNeedView() {
+        return null;
     }
 
     @Override

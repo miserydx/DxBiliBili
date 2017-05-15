@@ -91,7 +91,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             ViewGroup content = (ViewGroup) findViewById(android.R.id.content);
             //生成一个状态栏大小的矩形
-            View statusBarView = createStatusBarView(getResources().getColor(R.color.colorPrimaryDark));
+            View statusBarView = createStatusBarView(getResources().getColor(R.color.theme_color_primary));
             // 添加 statusBarView 到布局中
             content.addView(statusBarView, 0);
             getPaddingNeedView().setPadding(0, StatusBarUtils.getStatusBarHeight(this), 0, 0);

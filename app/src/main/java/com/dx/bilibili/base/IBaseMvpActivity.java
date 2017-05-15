@@ -1,33 +1,18 @@
 package com.dx.bilibili.base;
 
-import com.dx.bilibili.di.component.ActivityComponent;
+import android.view.View;
 
 /**
  * Created by jiayiyang on 17/5/8.
  */
 
-public interface IBaseMvpActivity<T extends AbsBasePresenter> {
+public interface IBaseMvpActivity<T extends AbsBasePresenter> extends IBaseActivity {
 
     /**
-     * 获取布局id
-     * @return
+     * 获取需要设置padding的view,padding值为默认构造statusBar的高度
+     * @return 非DrawerLayout页面返回null即可
      */
-    int getLayoutId();
-
-    /**
-     * 设置是否自定义statusbar
-     * @return true自定义,false按照默认封装的状态栏样式
-     */
-    boolean setCustomStatusBar();
-
-    /**
-     * 初始化dagger注入
-     */
-    void initInject(ActivityComponent activityComponent);
-
-    void initViewAndEvent();
-
-    void initData();
+    View getPaddingNeedView();
 
     T getPresenter();
 

@@ -27,7 +27,7 @@ public class NewsFragment extends BaseFragment {
 
     private NewsPagerAdapter adapter;
     private List<NewsPageFragment> mFagments = new ArrayList<>();
-    private String[] mTitles = {"Tab1", "Tab2", "Tab333344", "Tab4", "Tab5", "Tab6"};
+    private String[] mTitles = {"直播", "推荐", "追番", "分区", "动态", "发现"};
 
     @Override
     protected int setContentView() {

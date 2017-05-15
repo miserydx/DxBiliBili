@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.dx.bilibili.R;
 import com.dx.bilibili.base.BaseActivity;
+import com.dx.bilibili.base.BaseMvpActivity;
 import com.dx.bilibili.base.BaseView;
 import com.dx.bilibili.base.IBaseActivity;
 import com.dx.bilibili.base.IBaseMvpActivity;
@@ -34,51 +35,56 @@ final class ActivityLifecycleManager implements Application.ActivityLifecycleCal
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        if (activity instanceof IBaseActivity) {
-            IBaseActivity iActivity = (IBaseActivity) activity;
-            //加载布局
-            View contentView = LayoutInflater.from(activity).inflate(iActivity.getLayoutId(), null);
-            activity.setContentView(contentView);
-            //创建变量保存实体
-            ActivityBean bean = new ActivityBean();
-            //依赖注入
-            Unbinder unbinder = ButterKnife.bind(activity);
-            bean.setUnbinder(unbinder);
-            //保存变量
-            activity.getIntent().putExtra(ACTIVITY_BEAN, bean);
-            //设置透明状态栏
-            if (!iActivity.setCustomStatusBar()) {
-                setTransparentStatusBar(activity, contentView);
+        boolean isBaseActivity = activity instanceof BaseActivity;
+        boolean isBaseMvpActivity = activity instanceof BaseMvpActivity;
+        boolean isIBaseMvpActivity = activity instanceof IBaseMvpActivity;
+        if(!isBaseActivity && !isBaseMvpActivity){
+            if(!isIBaseMvpActivity){//IBaseActivity
+                IBaseActivity iActivity = (IBaseActivity) activity;
+                //加载布局
+                View contentView = LayoutInflater.from(activity).inflate(iActivity.getLayoutId(), null);
+                activity.setContentView(contentView);
+                //创建变量保存实体
+                ActivityBean bean = new ActivityBean();
+                //依赖注入
+                Unbinder unbinder = ButterKnife.bind(activity);
+                bean.setUnbinder(unbinder);
+                //保存变量
+                activity.getIntent().putExtra(ACTIVITY_BEAN, bean);
+                //设置透明状态栏
+                if (!iActivity.setCustomStatusBar()) {
+                    setTransparentStatusBar(activity, contentView);
+                }
+                //初始化
+                iActivity.initInject(getActivityComponent(activity));
+                iActivity.initViewAndEvent();
+                iActivity.initData();
+            } else {//IbaseMvpActivity
+                IBaseMvpActivity iActivity = (IBaseMvpActivity) activity;
+                BaseView view = (BaseView) iActivity;
+                iActivity.initInject(getActivityComponent(activity));
+                //创建变量保存实体
+                ActivityBean bean = new ActivityBean();
+                //presenter.attach
+                if (iActivity.getPresenter() != null) {
+                    iActivity.getPresenter().attachView(view);
+                }
+                //加载布局
+                View contentView = LayoutInflater.from(activity).inflate(iActivity.getLayoutId(), null);
+                activity.setContentView(contentView);
+                //依赖注入
+                Unbinder unbinder = ButterKnife.bind(activity);
+                bean.setUnbinder(unbinder);
+                //保存变量
+                activity.getIntent().putExtra(ACTIVITY_BEAN, bean);
+                //设置透明状态栏
+                if (!iActivity.setCustomStatusBar()) {
+                    setTransparentStatusBar(activity, contentView);
+                }
+                //初始化
+                iActivity.initViewAndEvent();
+                iActivity.initData();
             }
-            //初始化
-            iActivity.initInject(getActivityComponent(activity));
-            iActivity.initViewAndEvent();
-            iActivity.initData();
-        } else if (activity instanceof IBaseMvpActivity) {
-            IBaseMvpActivity iActivity = (IBaseMvpActivity) activity;
-            BaseView view  = (BaseView) iActivity;
-            iActivity.initInject(getActivityComponent(activity));
-            //创建变量保存实体
-            ActivityBean bean = new ActivityBean();
-            //presenter.attach
-            if(iActivity.getPresenter() != null){
-                iActivity.getPresenter().attachView(view);
-            }
-            //加载布局
-            View contentView = LayoutInflater.from(activity).inflate(iActivity.getLayoutId(), null);
-            activity.setContentView(contentView);
-            //依赖注入
-            Unbinder unbinder = ButterKnife.bind(activity);
-            bean.setUnbinder(unbinder);
-            //保存变量
-            activity.getIntent().putExtra(ACTIVITY_BEAN, bean);
-            //设置透明状态栏
-            if (!iActivity.setCustomStatusBar()) {
-                setTransparentStatusBar(activity, contentView);
-            }
-            //初始化
-            iActivity.initViewAndEvent();
-            iActivity.initData();
         }
     }
 
@@ -110,13 +116,14 @@ final class ActivityLifecycleManager implements Application.ActivityLifecycleCal
     @Override
     public void onActivityDestroyed(Activity activity) {
         boolean isBaseActivity = activity instanceof BaseActivity;
-        if (!isBaseActivity) {
+        boolean isBaseMvpActivity = activity instanceof BaseMvpActivity;
+        if (!isBaseActivity && !isBaseMvpActivity) {
             ActivityBean bean = activity.getIntent().getParcelableExtra(ACTIVITY_BEAN);
             bean.getUnbinder().unbind();
             if (activity instanceof IBaseMvpActivity) {
                 IBaseMvpActivity iActivity = (IBaseMvpActivity) activity;
                 //presenter.detach
-                if(iActivity.getPresenter() != null){
+                if (iActivity.getPresenter() != null) {
                     iActivity.getPresenter().detachView();
                 }
             }
@@ -132,9 +139,12 @@ final class ActivityLifecycleManager implements Application.ActivityLifecycleCal
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             ViewGroup content = (ViewGroup) activity.findViewById(android.R.id.content);
             //生成一个状态栏大小的矩形
-            View statusBarView = createStatusBarView(activity, activity.getResources().getColor(R.color.colorPrimaryDark));
+            View statusBarView = createStatusBarView(activity, activity.getResources().getColor(R.color.theme_color_primary));
             // 添加 statusBarView 到布局中
             content.addView(statusBarView, 0);
+            if (activity instanceof IBaseMvpActivity && ((IBaseMvpActivity) activity).getPaddingNeedView() != null) {
+                contentView = ((IBaseMvpActivity) activity).getPaddingNeedView();
+            }
             contentView.setPadding(0, StatusBarUtils.getStatusBarHeight(activity), 0, 0);
         }
     }

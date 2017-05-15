@@ -1,6 +1,7 @@
 package com.dx.bilibili.di.component;
 
 import com.dx.bilibili.di.module.ActivityModule;
+import com.dx.bilibili.ui.main.activity.MainActivity;
 import com.dx.bilibili.ui.test.activity.NewsActivity;
 import com.dx.bilibili.ui.test.activity.TestApiActivity;
 import com.dx.bilibili.ui.test.activity.TestNoBaseActivity;
@@ -34,5 +35,7 @@ public interface ActivityComponent {
     void inject(TestNoBaseActivity testNoBaseActivity);
 
     void inject(TestNoBaseMvpActivity testNoBaseMvpActivity);
+
+    void inject(MainActivity mainActivity);
 
 }

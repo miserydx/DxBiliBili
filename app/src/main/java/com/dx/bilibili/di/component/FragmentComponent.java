@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.dx.bilibili.di.module.FragmentModule;
 import com.dx.bilibili.di.scope.PerFragment;
+import com.dx.bilibili.ui.main.fragment.MainFragment;
 import com.dx.bilibili.ui.test.fragment.NewsFragment;
 import com.dx.bilibili.ui.test.fragment.NewsPageFragment;
 
@@ -22,5 +23,7 @@ public interface FragmentComponent {
     void inject(NewsFragment newsFragment);
 
     void inject(NewsPageFragment newsPageFragment);
+
+    void inject(MainFragment mainFragment);
 
 }
