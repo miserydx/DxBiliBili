@@ -12,11 +12,10 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.dx.bilibili.R;
-import com.dx.bilibili.base.BaseActivity;
-import com.dx.bilibili.base.BaseMvpActivity;
 import com.dx.bilibili.base.BaseView;
 import com.dx.bilibili.base.IBaseActivity;
 import com.dx.bilibili.base.IBaseMvpActivity;
+import com.dx.bilibili.base.IStatusBarSupport;
 import com.dx.bilibili.di.component.ActivityComponent;
 import com.dx.bilibili.di.component.DaggerActivityComponent;
 import com.dx.bilibili.di.module.ActivityModule;
@@ -35,56 +34,53 @@ final class ActivityLifecycleManager implements Application.ActivityLifecycleCal
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        boolean isBaseActivity = activity instanceof BaseActivity;
-        boolean isBaseMvpActivity = activity instanceof BaseMvpActivity;
         boolean isIBaseMvpActivity = activity instanceof IBaseMvpActivity;
-        if(!isBaseActivity && !isBaseMvpActivity){
-            if(!isIBaseMvpActivity){//IBaseActivity
-                IBaseActivity iActivity = (IBaseActivity) activity;
-                //加载布局
-                View contentView = LayoutInflater.from(activity).inflate(iActivity.getLayoutId(), null);
-                activity.setContentView(contentView);
-                //创建变量保存实体
-                ActivityBean bean = new ActivityBean();
-                //依赖注入
-                Unbinder unbinder = ButterKnife.bind(activity);
-                bean.setUnbinder(unbinder);
-                //保存变量
-                activity.getIntent().putExtra(ACTIVITY_BEAN, bean);
-                //设置透明状态栏
-                if (!iActivity.setCustomStatusBar()) {
-                    setTransparentStatusBar(activity, contentView);
-                }
-                //初始化
-                iActivity.initInject(getActivityComponent(activity));
-                iActivity.initViewAndEvent();
-                iActivity.initData();
-            } else {//IbaseMvpActivity
-                IBaseMvpActivity iActivity = (IBaseMvpActivity) activity;
-                BaseView view = (BaseView) iActivity;
-                iActivity.initInject(getActivityComponent(activity));
-                //创建变量保存实体
-                ActivityBean bean = new ActivityBean();
-                //presenter.attach
-                if (iActivity.getPresenter() != null) {
-                    iActivity.getPresenter().attachView(view);
-                }
-                //加载布局
-                View contentView = LayoutInflater.from(activity).inflate(iActivity.getLayoutId(), null);
-                activity.setContentView(contentView);
-                //依赖注入
-                Unbinder unbinder = ButterKnife.bind(activity);
-                bean.setUnbinder(unbinder);
-                //保存变量
-                activity.getIntent().putExtra(ACTIVITY_BEAN, bean);
-                //设置透明状态栏
-                if (!iActivity.setCustomStatusBar()) {
-                    setTransparentStatusBar(activity, contentView);
-                }
-                //初始化
-                iActivity.initViewAndEvent();
-                iActivity.initData();
+        boolean needSupportStatusBar = activity instanceof IStatusBarSupport;
+        if (!isIBaseMvpActivity) {//IBaseActivity
+            IBaseActivity iActivity = (IBaseActivity) activity;
+            //加载布局
+            View contentView = LayoutInflater.from(activity).inflate(iActivity.getLayoutId(), null);
+            activity.setContentView(contentView);
+            //创建变量保存实体
+            ActivityBean bean = new ActivityBean();
+            //依赖注入
+            Unbinder unbinder = ButterKnife.bind(activity);
+            bean.setUnbinder(unbinder);
+            //保存变量
+            activity.getIntent().putExtra(ACTIVITY_BEAN, bean);
+            //设置透明状态栏
+            if (needSupportStatusBar && ((IStatusBarSupport) activity).setCustomStatusBar()) {
+                setTransparentStatusBar(activity, contentView);
             }
+            //初始化
+            iActivity.initInject(getActivityComponent(activity));
+            iActivity.initViewAndEvent();
+            iActivity.initData();
+        } else {//IbaseMvpActivity
+            IBaseMvpActivity iActivity = (IBaseMvpActivity) activity;
+            BaseView view = (BaseView) iActivity;
+            iActivity.initInject(getActivityComponent(activity));
+            //创建变量保存实体
+            ActivityBean bean = new ActivityBean();
+            //presenter.attach
+            if (iActivity.getPresenter() != null) {
+                iActivity.getPresenter().attachView(view);
+            }
+            //加载布局
+            View contentView = LayoutInflater.from(activity).inflate(iActivity.getLayoutId(), null);
+            activity.setContentView(contentView);
+            //依赖注入
+            Unbinder unbinder = ButterKnife.bind(activity);
+            bean.setUnbinder(unbinder);
+            //保存变量
+            activity.getIntent().putExtra(ACTIVITY_BEAN, bean);
+            //设置透明状态栏
+            if (needSupportStatusBar && ((IStatusBarSupport) activity).setCustomStatusBar()) {
+                setTransparentStatusBar(activity, contentView);
+            }
+            //初始化
+            iActivity.initViewAndEvent();
+            iActivity.initData();
         }
     }
 
@@ -115,9 +111,7 @@ final class ActivityLifecycleManager implements Application.ActivityLifecycleCal
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        boolean isBaseActivity = activity instanceof BaseActivity;
-        boolean isBaseMvpActivity = activity instanceof BaseMvpActivity;
-        if (!isBaseActivity && !isBaseMvpActivity) {
+        if (activity instanceof IBaseActivity) {
             ActivityBean bean = activity.getIntent().getParcelableExtra(ACTIVITY_BEAN);
             bean.getUnbinder().unbind();
             if (activity instanceof IBaseMvpActivity) {
@@ -142,8 +136,8 @@ final class ActivityLifecycleManager implements Application.ActivityLifecycleCal
             View statusBarView = createStatusBarView(activity, activity.getResources().getColor(R.color.theme_color_primary));
             // 添加 statusBarView 到布局中
             content.addView(statusBarView, 0);
-            if (activity instanceof IBaseMvpActivity && ((IBaseMvpActivity) activity).getPaddingNeedView() != null) {
-                contentView = ((IBaseMvpActivity) activity).getPaddingNeedView();
+            if (activity instanceof IStatusBarSupport && ((IStatusBarSupport) activity).getPaddingNeedView() != null) {
+                contentView = ((IStatusBarSupport) activity).getPaddingNeedView();
             }
             contentView.setPadding(0, StatusBarUtils.getStatusBarHeight(activity), 0, 0);
         }

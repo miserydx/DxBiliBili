@@ -15,12 +15,6 @@ public interface IBaseActivity {
     int getLayoutId();
 
     /**
-     * 设置是否自定义statusbar
-     * @return true自定义,false按照默认封装的状态栏样式
-     */
-    boolean setCustomStatusBar();
-
-    /**
      * 初始化dagger注入
      */
     void initInject(ActivityComponent activityComponent);

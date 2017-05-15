@@ -4,7 +4,8 @@ import android.util.Log;
 
 import com.dx.bilibili.R;
 import com.dx.bilibili.app.ApiHelper;
-import com.dx.bilibili.base.BaseActivity;
+import com.dx.bilibili.base.IBaseActivity;
+import com.dx.bilibili.di.component.ActivityComponent;
 import com.dx.bilibili.model.api.AppApis;
 import com.dx.bilibili.model.api.BangumiApis;
 import com.dx.bilibili.model.api.LiveApis;
@@ -23,11 +24,12 @@ import com.dx.bilibili.util.DateUtil;
 
 import javax.inject.Inject;
 
+import me.yokeyword.fragmentation.SupportActivity;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class TestApiActivity extends BaseActivity {
+public class TestApiActivity extends SupportActivity implements IBaseActivity {
 
     @Inject
     AppApis appApis;
@@ -37,22 +39,22 @@ public class TestApiActivity extends BaseActivity {
     LiveApis liveApis;
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.activity_test_api;
     }
 
     @Override
-    protected void initInject() {
-        getActivityComponent().inject(this);
+    public void initInject(ActivityComponent activityComponent) {
+        activityComponent.inject(this);
     }
 
     @Override
-    protected void initViewAndEvent() {
+    public void initViewAndEvent() {
 
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         appApis.getRegionShow(ApiHelper.getAppKey(),ApiHelper.getBUILD(),ApiHelper.getMobiApp(), ApiHelper.getPLATFORM(), DateUtil.getSystemTime())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

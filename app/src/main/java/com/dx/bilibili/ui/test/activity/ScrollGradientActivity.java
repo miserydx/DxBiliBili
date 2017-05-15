@@ -1,14 +1,16 @@
 package com.dx.bilibili.ui.test.activity;
 
-import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.dx.bilibili.R;
-import com.dx.bilibili.base.BaseMvpActivity;
+import com.dx.bilibili.base.IBaseMvpActivity;
+import com.dx.bilibili.base.IStatusBarSupport;
+import com.dx.bilibili.di.component.ActivityComponent;
 import com.dx.bilibili.model.bean.WeiXinJingXuanBean;
 import com.dx.bilibili.ui.test.mvp.contract.MvpStructureContract;
 import com.dx.bilibili.ui.test.adapter.MvpStructureAdapter;
@@ -18,12 +20,17 @@ import com.dx.bilibili.ui.test.mvp.presenter.MvpStructurePresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
+import javax.inject.Inject;
 
-public class ScrollGradientActivity extends BaseMvpActivity<MvpStructurePresenter> implements MvpStructureContract.View {
+import butterknife.BindView;
+import me.yokeyword.fragmentation.SupportActivity;
+
+public class ScrollGradientActivity extends SupportActivity implements IBaseMvpActivity<MvpStructurePresenter>, IStatusBarSupport, MvpStructureContract.View {
 
     private final String TAG = ScrollGradientActivity.class.getSimpleName();
 
+    @Inject
+    MvpStructurePresenter mPresenter;
     @BindView(R.id.collapsing_toolbar_layout)
     CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.toolbar)
@@ -37,27 +44,32 @@ public class ScrollGradientActivity extends BaseMvpActivity<MvpStructurePresente
     private List<WeiXinJingXuanBean.NewsList> mList = new ArrayList<>();
 
     @Override
-    protected boolean setCustomStatusBar() {
+    public boolean setCustomStatusBar() {
         return true;
     }
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.activity_scroll_gradient;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initInject(ActivityComponent activityComponent) {
+        activityComponent.inject(this);
     }
 
     @Override
-    protected void initInject() {
-        getActivityComponent().inject(this);
+    public MvpStructurePresenter getPresenter() {
+        return mPresenter;
     }
 
     @Override
-    protected void initViewAndEvent() {
+    public View getPaddingNeedView() {
+        return null;
+    }
+
+    @Override
+    public void initViewAndEvent() {
         //自定义statusbar样式,与toolbar融合
         StatusBarUtils.setStatusBarMergeWithToolBar(mToolbar, this);
         collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(android.R.color.white));
@@ -70,13 +82,13 @@ public class ScrollGradientActivity extends BaseMvpActivity<MvpStructurePresente
                 mPresenter.loadData();
             }
         });
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mAdapter = new MvpStructureAdapter(mContext, mList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new MvpStructureAdapter(this, mList);
         recyclerView.setAdapter(mAdapter);
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         mPresenter.loadData();
     }
 

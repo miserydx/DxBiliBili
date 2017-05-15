@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 
 import com.dx.bilibili.R;
 import com.dx.bilibili.base.IBaseMvpActivity;
+import com.dx.bilibili.base.IStatusBarSupport;
 import com.dx.bilibili.di.component.ActivityComponent;
 import com.dx.bilibili.ui.main.fragment.MainFragment;
 import com.dx.bilibili.ui.main.mvp.contract.MainContract;
@@ -27,7 +28,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import me.yokeyword.fragmentation.SupportActivity;
 
-public class MainActivity extends SupportActivity implements IBaseMvpActivity<MainPresenter>, MainContract.View, MainFragment.OnInteractionListener {
+public class MainActivity extends SupportActivity implements IBaseMvpActivity<MainPresenter>, IStatusBarSupport, MainContract.View, MainFragment.OnInteractionListener {
 
     @Inject
     MainPresenter mPresenter;

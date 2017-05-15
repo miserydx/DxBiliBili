@@ -14,7 +14,7 @@
 
         <!-- 主页 -->
         <activity
-            android:name=".ui.test.activity.TestNavigationActivity"
+            android:name=".ui.test.activity.NavigationTestActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

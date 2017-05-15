@@ -14,15 +14,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class TestNoBaseMvpActivity extends AppCompatActivity implements IBaseMvpActivity<NoBaseMvpPresenter>, MvpStructureContract.View{
+import me.yokeyword.fragmentation.SupportActivity;
+
+public class TestNoBaseMvpActivity extends SupportActivity implements IBaseMvpActivity<NoBaseMvpPresenter>, MvpStructureContract.View{
 
     @Inject
     NoBaseMvpPresenter mPresenter;
-
-    @Override
-    public boolean setCustomStatusBar() {
-        return false;
-    }
 
     @Override
     public void initInject(ActivityComponent activityComponent) {
@@ -37,11 +34,6 @@ public class TestNoBaseMvpActivity extends AppCompatActivity implements IBaseMvp
     @Override
     public int getLayoutId() {
         return R.layout.activity_test_no_base;
-    }
-
-    @Override
-    public View getPaddingNeedView() {
-        return null;
     }
 
     @Override
