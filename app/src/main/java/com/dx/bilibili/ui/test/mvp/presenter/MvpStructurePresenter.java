@@ -19,7 +19,7 @@ import rx.schedulers.Schedulers;
  * Created by jiayiyang on 17/3/25.
  */
 
-public class MvpStructurePresenter extends AbsBasePresenter<MvpStructureContract.View> implements MvpStructureContract.Prensenter {
+public class MvpStructurePresenter extends AbsBasePresenter<MvpStructureContract.View> implements MvpStructureContract.Presenter {
 
     private static final String TAG = MvpStructurePresenter.class.getSimpleName();
 
@@ -29,6 +29,7 @@ public class MvpStructurePresenter extends AbsBasePresenter<MvpStructureContract
     public MvpStructurePresenter(WeChatApis weChatApis) {
         this.weChatApis = weChatApis;
     }
+
 
     @Override
     public void loadData() {
@@ -61,13 +62,15 @@ public class MvpStructurePresenter extends AbsBasePresenter<MvpStructureContract
                     @Override
                     public void onError(Throwable e) {
                         Log.d("misery", "onError");
+                        Log.e("zzt", "error " + e.toString());
                     }
                 });
-        addSubscrebe(rxSubscription2);
+        subscribeRx(rxSubscription2);
     }
 
     @Override
-    public void deleteData() {
+    public void releaseData() {
 
     }
+
 }

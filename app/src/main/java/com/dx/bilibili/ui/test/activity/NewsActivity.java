@@ -13,14 +13,13 @@ import android.widget.FrameLayout;
 
 import com.dx.bilibili.R;
 import com.dx.bilibili.base.IBaseActivity;
-import com.dx.bilibili.base.IStatusBarSupport;
 import com.dx.bilibili.di.component.ActivityComponent;
 import com.dx.bilibili.ui.test.fragment.NewsFragment;
 
 import butterknife.BindView;
 import me.yokeyword.fragmentation.SupportActivity;
 
-public class NewsActivity extends SupportActivity implements IBaseActivity, IStatusBarSupport {
+public class NewsActivity extends SupportActivity implements IBaseActivity {
 
     private final String TAG = NewsActivity.class.getSimpleName();
 
@@ -105,11 +104,6 @@ public class NewsActivity extends SupportActivity implements IBaseActivity, ISta
 
             }
         });
-    }
-
-    @Override
-    public void initData() {
-
     }
 
     @Override

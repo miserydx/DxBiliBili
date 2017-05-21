@@ -15,17 +15,22 @@ public class TestNoBaseActivity extends AppCompatActivity implements IBaseActivi
     }
 
     @Override
+    public View getPaddingNeedView() {
+        return null;
+    }
+
+    @Override
+    public boolean setCustomStatusBar() {
+        return false;
+    }
+
+    @Override
     public void initInject(ActivityComponent activityComponent) {
         activityComponent.inject(this);
     }
 
     @Override
     public void initViewAndEvent() {
-
-    }
-
-    @Override
-    public void initData() {
 
     }
 }

@@ -1,6 +1,5 @@
 package com.dx.bilibili.ui.test.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.dx.bilibili.R;
@@ -37,13 +36,18 @@ public class TestNoBaseMvpActivity extends SupportActivity implements IBaseMvpAc
     }
 
     @Override
-    public void initViewAndEvent() {
-
+    public View getPaddingNeedView() {
+        return null;
     }
 
     @Override
-    public void initData() {
-        mPresenter.loadData();
+    public boolean setCustomStatusBar() {
+        return false;
+    }
+
+    @Override
+    public void initViewAndEvent() {
+
     }
 
     @Override

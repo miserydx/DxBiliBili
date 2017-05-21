@@ -1,6 +1,6 @@
 package com.dx.bilibili.model.api;
 
-import com.dx.bilibili.di.scope.ApiInfo;
+import com.dx.bilibili.model.api.annotation.NeedSign;
 import com.dx.bilibili.model.bean.SearchHotResponse;
 import com.dx.bilibili.model.bean.IndexResponse;
 import com.dx.bilibili.model.bean.RegionShowResponse;
@@ -30,7 +30,6 @@ public interface AppApis {
      * http://app.bilibili.com/x/v2/splash?mobi_app=android&build=502000&channel=baidu&width=1080&height=1920&ver=4082600596548893087
      */
     @GET("/x/v2/splash")
-    @ApiInfo(needSigned = false)
     Observable<ResultList<SplashResponse>> getSplash(@Query("mobi_app") String mobi_app,
                                                      @Query("build") String build,
                                                      @Query("channel") String channel,
@@ -45,7 +44,7 @@ public interface AppApis {
      * http://app.bilibili.com/x/feed/index?appkey=1d8b6e7d45233436&build=502000&idx=1493277505&mobi_app=android&network=wifi&platform=android&pull=true&style=2&ts=1493362805000&sign=91c7aa61728e8299df5755%20d106babbfd
      */
     @GET("/x/feed/index")
-    @ApiInfo(needSigned = true)
+    @NeedSign
     Observable<ResultList<IndexResponse>> getIndex(@Query("appkey") String appkey,
                                                    @Query("build") String build,
                                                    @Query("idx") String idx,
@@ -62,7 +61,6 @@ public interface AppApis {
      * http://app.bilibili.com/x/v2/region?appkey=1d8b6e7d45233436&build=502000&mobi_app=android&platform=android&ts=1493689159000&ver=188703795824240229&sign=89ec282fcc4f06d8d3812dbc9f8456a9
      */
     @GET("/x/v2/region")
-    @ApiInfo(needSigned = false)
     Observable<ResultList<RegionResponse>> getRegion(@Query("build") String build);
 
     /**
@@ -70,7 +68,7 @@ public interface AppApis {
      * http://app.bilibili.com/x/v2/show/region?appkey=1d8b6e7d45233436&build=502000&mobi_app=android&platform=android&ts=1493711039000&sign=01cfab07e67d3520363d82636296dc8b
      */
     @GET("/x/v2/show/region")
-    @ApiInfo(needSigned = true)
+    @NeedSign
     Observable<ResultList<RegionShowResponse>> getRegionShow(@Query("appkey") String appkey,
                                                              @Query("build") String build,
                                                              @Query("mobi_app") String mobi_app,
@@ -83,7 +81,7 @@ public interface AppApis {
      * http://app.bilibili.com/x/v2/search/hot?appkey=1d8b6e7d45233436&build=502000&limit=50&mobi_app=android&platform=android&ts=1493968467000&sign=ee58e9b75ed786d077a04a1121ca%20a575
      */
     @GET("/x/v2/search/hot")
-    @ApiInfo(needSigned = true)
+    @NeedSign
     Observable<ResultObject<SearchHotResponse>> getSerchHot(@Query("appkey") String appkey,
                                                             @Query("build") String build,
                                                             @Query("limit") int limit,

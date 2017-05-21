@@ -1,6 +1,7 @@
 package com.dx.bilibili.ui.test.activity;
 
 import android.util.Log;
+import android.view.View;
 
 import com.dx.bilibili.R;
 import com.dx.bilibili.app.ApiHelper;
@@ -9,7 +10,6 @@ import com.dx.bilibili.di.component.ActivityComponent;
 import com.dx.bilibili.model.api.AppApis;
 import com.dx.bilibili.model.api.BangumiApis;
 import com.dx.bilibili.model.api.LiveApis;
-import com.dx.bilibili.model.bean.SearchHotResponse;
 import com.dx.bilibili.model.bean.BangumiIndexPageResponse;
 import com.dx.bilibili.model.bean.IndexResponse;
 import com.dx.bilibili.model.bean.LiveAreasResponse;
@@ -19,6 +19,7 @@ import com.dx.bilibili.model.bean.RegionResponse;
 import com.dx.bilibili.model.bean.RegionShowResponse;
 import com.dx.bilibili.model.bean.ResultList;
 import com.dx.bilibili.model.bean.ResultObject;
+import com.dx.bilibili.model.bean.SearchHotResponse;
 import com.dx.bilibili.model.bean.SplashResponse;
 import com.dx.bilibili.util.DateUtil;
 
@@ -44,17 +45,22 @@ public class TestApiActivity extends SupportActivity implements IBaseActivity {
     }
 
     @Override
+    public View getPaddingNeedView() {
+        return null;
+    }
+
+    @Override
+    public boolean setCustomStatusBar() {
+        return false;
+    }
+
+    @Override
     public void initInject(ActivityComponent activityComponent) {
         activityComponent.inject(this);
     }
 
     @Override
     public void initViewAndEvent() {
-
-    }
-
-    @Override
-    public void initData() {
         appApis.getRegionShow(ApiHelper.getAppKey(),ApiHelper.getBUILD(),ApiHelper.getMobiApp(), ApiHelper.getPLATFORM(), DateUtil.getSystemTime())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -9,7 +9,6 @@ import android.view.View;
 
 import com.dx.bilibili.R;
 import com.dx.bilibili.base.IBaseMvpActivity;
-import com.dx.bilibili.base.IStatusBarSupport;
 import com.dx.bilibili.di.component.ActivityComponent;
 import com.dx.bilibili.model.bean.WeiXinJingXuanBean;
 import com.dx.bilibili.ui.test.mvp.contract.MvpStructureContract;
@@ -24,7 +23,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import me.yokeyword.fragmentation.SupportActivity;
 
-public class ToolbarBehaviorActivity extends SupportActivity implements IBaseMvpActivity<MvpStructurePresenter>, IStatusBarSupport, MvpStructureContract.View {
+public class ToolbarBehaviorActivity extends SupportActivity implements IBaseMvpActivity<MvpStructurePresenter>, MvpStructureContract.View {
 
     private final String TAG = ToolbarBehaviorActivity.class.getSimpleName();
 
@@ -80,11 +79,6 @@ public class ToolbarBehaviorActivity extends SupportActivity implements IBaseMvp
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new MvpStructureAdapter(this, mList);
         recyclerView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void initData() {
-        mPresenter.loadData();
     }
 
     @Override

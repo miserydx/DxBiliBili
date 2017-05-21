@@ -20,11 +20,7 @@ public interface MvpStructureContract {
 
     }
 
-    interface Prensenter extends BasePresenter {
-
-        void loadData();
-
-        void deleteData();
+    interface Presenter extends BasePresenter {
 
     }
 

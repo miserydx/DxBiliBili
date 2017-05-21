@@ -83,11 +83,6 @@ public class MainFragment extends BaseFragment {
         tabLayout.setViewPager(viewPager, mTitles);
     }
 
-    @Override
-    protected void initData() {
-
-    }
-
     @OnClick({R.id.top_menu_nav_ll})
     public void onClick(View view) {
         switch (view.getId()) {

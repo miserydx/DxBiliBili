@@ -38,6 +38,16 @@ public class NavigationTestActivity extends SupportActivity implements IBaseActi
     }
 
     @Override
+    public View getPaddingNeedView() {
+        return null;
+    }
+
+    @Override
+    public boolean setCustomStatusBar() {
+        return false;
+    }
+
+    @Override
     public void initInject(ActivityComponent activityComponent) {
 
     }
@@ -45,10 +55,6 @@ public class NavigationTestActivity extends SupportActivity implements IBaseActi
     @Override
     public void initViewAndEvent() {
 
-    }
-
-    @Override
-    public void initData() {
     }
 
     @OnClick({R.id.toolbar_behavior_mvp_btn, R.id.news_btn, R.id.status_picture_mvp_btn, R.id.scroll_gradient_mvp_btn, R.id.test_api_btn,

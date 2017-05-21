@@ -1,7 +1,6 @@
 package com.dx.bilibili.ui.main.mvp.presenter;
 
 import com.dx.bilibili.base.AbsBasePresenter;
-import com.dx.bilibili.model.api.WeChatApis;
 import com.dx.bilibili.ui.main.mvp.contract.MainContract;
 
 import javax.inject.Inject;
@@ -20,4 +19,13 @@ public class MainPresenter extends AbsBasePresenter<MainContract.View> implement
     }
 
 
+    @Override
+    public void loadData() {
+
+    }
+
+    @Override
+    public void releaseData() {
+
+    }
 }

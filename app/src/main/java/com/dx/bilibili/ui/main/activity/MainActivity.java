@@ -5,30 +5,24 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.dx.bilibili.R;
 import com.dx.bilibili.base.IBaseMvpActivity;
-import com.dx.bilibili.base.IStatusBarSupport;
 import com.dx.bilibili.di.component.ActivityComponent;
 import com.dx.bilibili.ui.main.fragment.MainFragment;
 import com.dx.bilibili.ui.main.mvp.contract.MainContract;
 import com.dx.bilibili.ui.main.mvp.presenter.MainPresenter;
-import com.dx.bilibili.ui.test.fragment.NewsFragment;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import me.yokeyword.fragmentation.SupportActivity;
 
-public class MainActivity extends SupportActivity implements IBaseMvpActivity<MainPresenter>, IStatusBarSupport, MainContract.View, MainFragment.OnInteractionListener {
+public class MainActivity extends SupportActivity implements IBaseMvpActivity<MainPresenter>, MainContract.View, MainFragment.OnInteractionListener {
 
     @Inject
     MainPresenter mPresenter;
@@ -115,11 +109,6 @@ public class MainActivity extends SupportActivity implements IBaseMvpActivity<Ma
 
             }
         });
-    }
-
-    @Override
-    public void initData() {
-
     }
 
     @Override

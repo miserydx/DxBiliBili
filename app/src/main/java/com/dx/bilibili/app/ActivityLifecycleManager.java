@@ -15,7 +15,6 @@ import com.dx.bilibili.R;
 import com.dx.bilibili.base.BaseView;
 import com.dx.bilibili.base.IBaseActivity;
 import com.dx.bilibili.base.IBaseMvpActivity;
-import com.dx.bilibili.base.IStatusBarSupport;
 import com.dx.bilibili.di.component.ActivityComponent;
 import com.dx.bilibili.di.component.DaggerActivityComponent;
 import com.dx.bilibili.di.module.ActivityModule;
@@ -30,13 +29,15 @@ import butterknife.Unbinder;
 
 final class ActivityLifecycleManager implements Application.ActivityLifecycleCallbacks {
 
-    private static final String ACTIVITY_BEAN = "ActivityBean";
+    private static final String EXTRA_ACTIVITY_BEAN = "extra_activity_bean";
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+        boolean isIBaseActivity = activity instanceof IBaseActivity;
         boolean isIBaseMvpActivity = activity instanceof IBaseMvpActivity;
-        boolean needSupportStatusBar = activity instanceof IStatusBarSupport;
-        if (!isIBaseMvpActivity) {//IBaseActivity
+
+        //IBaseActivity 项目中的 Activity 都应实现 IBaseActivity
+        if (isIBaseActivity) {
             IBaseActivity iActivity = (IBaseActivity) activity;
             //加载布局
             View contentView = LayoutInflater.from(activity).inflate(iActivity.getLayoutId(), null);
@@ -47,46 +48,38 @@ final class ActivityLifecycleManager implements Application.ActivityLifecycleCal
             Unbinder unbinder = ButterKnife.bind(activity);
             bean.setUnbinder(unbinder);
             //保存变量
-            activity.getIntent().putExtra(ACTIVITY_BEAN, bean);
+            activity.getIntent().putExtra(EXTRA_ACTIVITY_BEAN, bean);
             //设置透明状态栏
-            if (needSupportStatusBar && ((IStatusBarSupport) activity).setCustomStatusBar()) {
+            if (iActivity.setCustomStatusBar()) {
                 setTransparentStatusBar(activity, contentView);
             }
-            //初始化
+
             iActivity.initInject(getActivityComponent(activity));
-            iActivity.initViewAndEvent();
-            iActivity.initData();
-        } else {//IbaseMvpActivity
-            IBaseMvpActivity iActivity = (IBaseMvpActivity) activity;
-            BaseView view = (BaseView) iActivity;
-            iActivity.initInject(getActivityComponent(activity));
-            //创建变量保存实体
-            ActivityBean bean = new ActivityBean();
-            //presenter.attach
-            if (iActivity.getPresenter() != null) {
-                iActivity.getPresenter().attachView(view);
+
+            //IBaseMvpActivity 如果是 MVP Activity 则实现 IBaseMvpActivity
+            if (isIBaseMvpActivity) {
+                IBaseMvpActivity mvpActivity = (IBaseMvpActivity) activity;
+                BaseView view = (BaseView) mvpActivity;
+                if (mvpActivity.getPresenter() != null) {
+                    mvpActivity.getPresenter().attachView(view);
+                }
             }
-            //加载布局
-            View contentView = LayoutInflater.from(activity).inflate(iActivity.getLayoutId(), null);
-            activity.setContentView(contentView);
-            //依赖注入
-            Unbinder unbinder = ButterKnife.bind(activity);
-            bean.setUnbinder(unbinder);
-            //保存变量
-            activity.getIntent().putExtra(ACTIVITY_BEAN, bean);
-            //设置透明状态栏
-            if (needSupportStatusBar && ((IStatusBarSupport) activity).setCustomStatusBar()) {
-                setTransparentStatusBar(activity, contentView);
-            }
+
+            //TODO 如有其它特殊 Activity，定义新接口继承IBaseActivity，并在此处理
+
             //初始化
             iActivity.initViewAndEvent();
-            iActivity.initData();
         }
+
+        //TODO 第三方的 Activity 如需做公共处理，可在此处添加
     }
 
     @Override
     public void onActivityStarted(Activity activity) {
-
+        if (activity instanceof IBaseMvpActivity) {
+            IBaseMvpActivity mvpActivity = (IBaseMvpActivity) activity;
+            mvpActivity.getPresenter().loadData();
+        }
     }
 
     @Override
@@ -101,7 +94,10 @@ final class ActivityLifecycleManager implements Application.ActivityLifecycleCal
 
     @Override
     public void onActivityStopped(Activity activity) {
-
+        if (activity instanceof IBaseMvpActivity) {
+            IBaseMvpActivity mvpActivity = (IBaseMvpActivity) activity;
+            mvpActivity.getPresenter().releaseData();
+        }
     }
 
     @Override
@@ -112,7 +108,7 @@ final class ActivityLifecycleManager implements Application.ActivityLifecycleCal
     @Override
     public void onActivityDestroyed(Activity activity) {
         if (activity instanceof IBaseActivity) {
-            ActivityBean bean = activity.getIntent().getParcelableExtra(ACTIVITY_BEAN);
+            ActivityBean bean = activity.getIntent().getParcelableExtra(EXTRA_ACTIVITY_BEAN);
             bean.getUnbinder().unbind();
             if (activity instanceof IBaseMvpActivity) {
                 IBaseMvpActivity iActivity = (IBaseMvpActivity) activity;
@@ -136,8 +132,8 @@ final class ActivityLifecycleManager implements Application.ActivityLifecycleCal
             View statusBarView = createStatusBarView(activity, activity.getResources().getColor(R.color.theme_color_primary));
             // 添加 statusBarView 到布局中
             content.addView(statusBarView, 0);
-            if (activity instanceof IStatusBarSupport && ((IStatusBarSupport) activity).getPaddingNeedView() != null) {
-                contentView = ((IStatusBarSupport) activity).getPaddingNeedView();
+            if (activity instanceof IBaseActivity && ((IBaseActivity) activity).getPaddingNeedView() != null) {
+                contentView = ((IBaseActivity) activity).getPaddingNeedView();
             }
             contentView.setPadding(0, StatusBarUtils.getStatusBarHeight(activity), 0, 0);
         }
