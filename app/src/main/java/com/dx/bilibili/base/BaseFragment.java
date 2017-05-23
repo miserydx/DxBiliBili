@@ -48,14 +48,11 @@ abstract public class BaseFragment extends SupportFragment {
         mUnbinder = ButterKnife.bind(this, view);
         initInject();
         initViewAndEvent();
-        initData();
     }
 
     abstract protected void initInject();
 
     abstract protected void initViewAndEvent();
-
-    abstract protected void initData();
 
     private AppComponent getAppComponent(){
         return ((App)_mActivity.getApplication()).getAppComponent();

@@ -7,26 +7,10 @@
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
-    <LinearLayout
-        android:id="@+id/content_ll"
+    <FrameLayout
+        android:id="@+id/news_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimaryDark"
-            app:popupTheme="@style/AppTheme"
-            app:titleTextColor="@android:color/white" />
-
-        <FrameLayout
-            android:id="@+id/news_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

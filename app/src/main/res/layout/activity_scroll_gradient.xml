@@ -14,7 +14,7 @@
             android:id="@+id/collapsing_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="240dp"
-            android:background="@mipmap/toolbar_test_background"
+            android:background="@drawable/bg_default_music_lockscreen_cover"
             app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 

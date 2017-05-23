@@ -2,14 +2,12 @@ package com.dx.bilibili.app;
 
 import android.util.Log;
 
-import com.dx.bilibili.di.scope.ApiInfo;
 import com.dx.bilibili.model.api.AppApis;
 import com.dx.bilibili.model.api.BangumiApis;
 import com.dx.bilibili.model.api.LiveApis;
+import com.dx.bilibili.model.api.annotation.NeedSign;
 
 import java.lang.reflect.Method;
-
-import retrofit2.http.GET;
 
 /**
  * Created by jiayiyang on 17/4/27.
@@ -61,17 +59,16 @@ public class ApiHelper {
         return SCALE;
     }
 
-    public static boolean needSigned(String host, String path) {
-        boolean needSigned = false;
+    public static boolean needSigned(String host) {
         Class clz = getClass(host);
-        for (Method method : clz.getMethods()) {
-            ApiInfo apiInfo = method.getAnnotation(ApiInfo.class);
-            GET get = method.getAnnotation(GET.class);
-            if (apiInfo != null && get.value().equals(path)) {
-                needSigned = apiInfo.needSigned();
-            }
+        if (clz == null) {
+            return false;
         }
-        return needSigned;
+        for (Method method : clz.getMethods()) {
+            NeedSign needSign = method.getAnnotation(NeedSign.class);
+            return (needSign != null);
+        }
+        return false;
     }
 
     private static Class getClass(String host) {

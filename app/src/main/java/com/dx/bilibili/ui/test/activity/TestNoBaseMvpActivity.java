@@ -1,6 +1,6 @@
 package com.dx.bilibili.ui.test.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.dx.bilibili.R;
 import com.dx.bilibili.base.IBaseMvpActivity;
@@ -13,15 +13,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class TestNoBaseMvpActivity extends AppCompatActivity implements IBaseMvpActivity<NoBaseMvpPresenter>, MvpStructureContract.View{
+import me.yokeyword.fragmentation.SupportActivity;
+
+public class TestNoBaseMvpActivity extends SupportActivity implements IBaseMvpActivity<NoBaseMvpPresenter>, MvpStructureContract.View{
 
     @Inject
     NoBaseMvpPresenter mPresenter;
-
-    @Override
-    public boolean setCustomStatusBar() {
-        return false;
-    }
 
     @Override
     public void initInject(ActivityComponent activityComponent) {
@@ -39,13 +36,18 @@ public class TestNoBaseMvpActivity extends AppCompatActivity implements IBaseMvp
     }
 
     @Override
-    public void initViewAndEvent() {
-
+    public View getPaddingNeedView() {
+        return null;
     }
 
     @Override
-    public void initData() {
-        mPresenter.loadData();
+    public boolean setCustomStatusBar() {
+        return false;
+    }
+
+    @Override
+    public void initViewAndEvent() {
+
     }
 
     @Override

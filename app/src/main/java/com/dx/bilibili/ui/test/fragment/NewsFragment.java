@@ -26,8 +26,8 @@ public class NewsFragment extends BaseFragment {
     ViewPager viewPager;
 
     private NewsPagerAdapter adapter;
-    private List<NewsPageFragment> mFagments = new ArrayList<>();
-    private String[] mTitles = {"Tab1", "Tab2", "Tab333344", "Tab4", "Tab5", "Tab6"};
+    private List<NewsPageFragment> mFragments = new ArrayList<>();
+    private String[] mTitles = {"直播", "推荐", "追番", "分区", "动态", "发现"};
 
     @Override
     protected int setContentView() {
@@ -42,16 +42,11 @@ public class NewsFragment extends BaseFragment {
     @Override
     protected void initViewAndEvent() {
         for (String s : mTitles) {
-            mFagments.add(new NewsPageFragment());
+            mFragments.add(new NewsPageFragment());
         }
         adapter = new NewsPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapter);
         tabLayout.setViewPager(viewPager, mTitles);
-    }
-
-    @Override
-    protected void initData() {
-
     }
 
     private class NewsPagerAdapter extends FragmentPagerAdapter {
@@ -62,7 +57,7 @@ public class NewsFragment extends BaseFragment {
 
         @Override
         public int getCount() {
-            return mFagments.size();
+            return mFragments.size();
         }
 
         @Override
@@ -72,7 +67,7 @@ public class NewsFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
-            return mFagments.get(position);
+            return mFragments.get(position);
         }
     }
 

@@ -1,14 +1,15 @@
 package com.dx.bilibili.ui.test.activity;
 
 import android.util.Log;
+import android.view.View;
 
 import com.dx.bilibili.R;
 import com.dx.bilibili.app.ApiHelper;
-import com.dx.bilibili.base.BaseActivity;
+import com.dx.bilibili.base.IBaseActivity;
+import com.dx.bilibili.di.component.ActivityComponent;
 import com.dx.bilibili.model.api.AppApis;
 import com.dx.bilibili.model.api.BangumiApis;
 import com.dx.bilibili.model.api.LiveApis;
-import com.dx.bilibili.model.bean.SearchHotResponse;
 import com.dx.bilibili.model.bean.BangumiIndexPageResponse;
 import com.dx.bilibili.model.bean.IndexResponse;
 import com.dx.bilibili.model.bean.LiveAreasResponse;
@@ -18,16 +19,18 @@ import com.dx.bilibili.model.bean.RegionResponse;
 import com.dx.bilibili.model.bean.RegionShowResponse;
 import com.dx.bilibili.model.bean.ResultList;
 import com.dx.bilibili.model.bean.ResultObject;
+import com.dx.bilibili.model.bean.SearchHotResponse;
 import com.dx.bilibili.model.bean.SplashResponse;
 import com.dx.bilibili.util.DateUtil;
 
 import javax.inject.Inject;
 
+import me.yokeyword.fragmentation.SupportActivity;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class TestApiActivity extends BaseActivity {
+public class TestApiActivity extends SupportActivity implements IBaseActivity {
 
     @Inject
     AppApis appApis;
@@ -37,22 +40,27 @@ public class TestApiActivity extends BaseActivity {
     LiveApis liveApis;
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.activity_test_api;
     }
 
     @Override
-    protected void initInject() {
-        getActivityComponent().inject(this);
+    public View getPaddingNeedView() {
+        return null;
     }
 
     @Override
-    protected void initViewAndEvent() {
-
+    public boolean setCustomStatusBar() {
+        return false;
     }
 
     @Override
-    protected void initData() {
+    public void initInject(ActivityComponent activityComponent) {
+        activityComponent.inject(this);
+    }
+
+    @Override
+    public void initViewAndEvent() {
         appApis.getRegionShow(ApiHelper.getAppKey(),ApiHelper.getBUILD(),ApiHelper.getMobiApp(), ApiHelper.getPLATFORM(), DateUtil.getSystemTime())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

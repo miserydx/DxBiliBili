@@ -1,65 +1,58 @@
 package com.dx.bilibili.ui.test.activity;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
 import com.dx.bilibili.R;
-import com.dx.bilibili.base.BaseActivity;
+import com.dx.bilibili.base.IBaseActivity;
+import com.dx.bilibili.di.component.ActivityComponent;
 import com.dx.bilibili.ui.test.fragment.NewsFragment;
 
 import butterknife.BindView;
+import me.yokeyword.fragmentation.SupportActivity;
 
-public class NewsActivity extends BaseActivity {
+public class NewsActivity extends SupportActivity implements IBaseActivity {
 
     private final String TAG = NewsActivity.class.getSimpleName();
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-    @BindView(R.id.content_ll)
-    LinearLayout mLinearLayout;
+    @BindView(R.id.news_container)
+    FrameLayout mFrameLayout;
     @BindView(R.id.nav_view)
     NavigationView mNavigationView;
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         //布局中NavigationView设置fitsSystemWindows=false解决4.4左侧抽屉与状态栏merge问题
         return R.layout.activity_news;
     }
 
     @Override
-    protected View getPaddingNeedView() {
-        return mLinearLayout;
+    public boolean setCustomStatusBar() {
+        return false;
     }
 
     @Override
-    protected void initInject() {
-        getActivityComponent().inject(this);
+    public View getPaddingNeedView() {
+        return mFrameLayout;
+    }
+
+    @Override
+    public void initInject(ActivityComponent activityComponent) {
+        activityComponent.inject(this);
     }
 
     @Override
     public void initViewAndEvent() {
-        //关闭右滑返回
-        setSwipeBackEnable(false);
-
-        mToolbar.setTitle("新闻");
-        setSupportActionBar(mToolbar);
-
-        NewsFragment newsFragment = new NewsFragment();
-        loadRootFragment(R.id.news_container, newsFragment);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
-                mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -114,8 +107,10 @@ public class NewsActivity extends BaseActivity {
     }
 
     @Override
-    protected void initData() {
-
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        NewsFragment newsFragment = new NewsFragment();
+        loadRootFragment(R.id.news_container, newsFragment);
     }
 
     @Override

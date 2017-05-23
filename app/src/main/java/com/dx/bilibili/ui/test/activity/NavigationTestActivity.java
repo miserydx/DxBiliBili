@@ -5,12 +5,15 @@ import android.view.View;
 import android.widget.Button;
 
 import com.dx.bilibili.R;
-import com.dx.bilibili.base.BaseActivity;
+import com.dx.bilibili.base.IBaseActivity;
+import com.dx.bilibili.di.component.ActivityComponent;
+import com.dx.bilibili.ui.main.activity.MainActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.yokeyword.fragmentation.SupportActivity;
 
-public class NavigationTestActivity extends BaseActivity {
+public class NavigationTestActivity extends SupportActivity implements IBaseActivity {
 
     @BindView(R.id.news_btn)
     Button btnNews;
@@ -35,22 +38,22 @@ public class NavigationTestActivity extends BaseActivity {
     }
 
     @Override
+    public View getPaddingNeedView() {
+        return null;
+    }
+
+    @Override
     public boolean setCustomStatusBar() {
         return false;
     }
 
     @Override
-    protected void initInject() {
+    public void initInject(ActivityComponent activityComponent) {
 
     }
 
     @Override
     public void initViewAndEvent() {
-
-    }
-
-    @Override
-    public void initData() {
 
     }
 
@@ -78,6 +81,9 @@ public class NavigationTestActivity extends BaseActivity {
                 break;
             case R.id.test_no_base_mvp_btn:
                 startActivity(new Intent(this, TestNoBaseMvpActivity.class));
+                break;
+            case R.id.main_btn:
+                startActivity(new Intent(this, MainActivity.class));
                 break;
         }
     }

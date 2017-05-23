@@ -14,7 +14,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@mipmap/toolbar_test_background"
+            android:background="@drawable/bg_default_music_lockscreen_cover"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme"
             app:titleTextColor="@android:color/white" />

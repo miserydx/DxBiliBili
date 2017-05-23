@@ -14,7 +14,7 @@
 
         <!-- 主页 -->
         <activity
-            android:name=".ui.test.activity.TestNavigationActivity"
+            android:name=".ui.test.activity.NavigationTestActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,7 +56,9 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".ui.test.activity.TestNoBaseActivity" />
         <activity android:name=".ui.test.activity.TestNoBaseMvpActivity" />
-        <activity android:name=".ui.main.activity.MainActivity"></activity>
+        <activity android:name=".ui.main.activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>
